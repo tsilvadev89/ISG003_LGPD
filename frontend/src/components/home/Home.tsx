@@ -46,8 +46,8 @@ const Home: React.FC = () => {
   };
 
   const handleLogout = () => {
-    axios.post(`${API_URL}/logout`)
-    /* axios.post('http://localhost:3000/logout') */
+    /* axios.post(`${API_URL}/logout`) */
+    axios.post('http://localhost:3000/logout')
       .then(() => {
         navigate('/');
       })
