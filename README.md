@@ -1,2 +1,2 @@
-# ISG003_LGPD
- TRABALHO LGPD SAKAWE
+# projetoVendasSO2
+ Projeto 4 semestre SO2
