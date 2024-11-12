@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DB_HOST: db  # SERVIÇO DB
+      DB_USER: fatec
+      DB_PASSWORD: fatec
+      DB_NAME: salao_beleza
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: salao_beleza
+      MYSQL_USER: fatec
+      MYSQL_PASSWORD: fatec
+
+  frontend:
+    build:
+      context: ../../5S_REDES_FRONTEND
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

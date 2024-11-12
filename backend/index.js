@@ -1,62 +1,55 @@
-require('dotenv').config();
+// index.js
 const express = require('express');
-const bodyParser = require('body-parser');
-const helmet = require('helmet');
-const rateLimit = require("express-rate-limit");
 const cors = require('cors');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const path = require("path");
-const http = require('http');
+require('dotenv').config();
 
-// IMPORTAÇÕES DE ROTAS DO BACKEND
-const userRoutes = require('./routes/userRoute');
-const loginRoutes = require('./routes/loginRoute');
-const logoutRoutes = require('./routes/logoutRoute');
-const cookieRoutes = require('./routes/cookieRoute');
-const productRoutes = require('./routes/productRoute');
+const populateData = require('./populate/populateData');
+const clienteRoutes = require('./routes/clienteRoutes');
+const funcionarioRoutes = require('./routes/funcionarioRoutes');
+const produtoRoutes = require('./routes/produtoRoutes');
+const servicoRoutes = require('./routes/servicoRoutes');
+const pedidoRoutes = require('./routes/pedidoRoutes');
+const cargoRoutes = require('./routes/cargoRoutes');
+const categoriaRoutes = require('./routes/categoriaRoutes');
+const enderecoRoutes = require('./routes/enderecoRoutes');
+const agendamentoRoutes = require('./routes/agendamentoRoutes');
+const authRoutes = require('./routes/authRoutes');
 
-// Configurações do servidor
 const app = express();
-const server = http.createServer(app);
-const PORT = process.env.PORT || 3000;
-
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // Tempo de seção
-    max: 200 //  Segurança quantidade de requisições
-});
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, './')));
 app.use(express.json());
-app.use(helmet());
-app.use(limiter);
 app.use(cors({
-    origin: ['http://localhost', 'http://18.213.164.46'],
-    methods: ['POST', 'GET', 'PUT', 'DELETE'],
-    credentials: true
-}));
-app.set('view engine', 'ejs');
-app.use(cookieParser());
-
-// Organização sessão cookie
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: false,
-        maxAge: 1000 * 60 * 60 * 24 // Um dia
-    },
-    name: 'userLogged'
+  origin: '*',
 }));
 
-// Rotas do backend
-app.use('/us', userRoutes);
-app.use('/login', loginRoutes);
-app.use('/logout', logoutRoutes);
-app.use('/ck', cookieRoutes);
-app.use('/product', productRoutes);
+async function initializeApp() {
+  try {
+    await populateData(); // Criação e população do banco de dados
+    console.log('Banco de dados configurado e populado.');
 
-server.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`)})
+    // Configuração de rotas
+    app.use('/api/agendamentos', agendamentoRoutes);
+    app.use('/api/cargos', cargoRoutes);
+    app.use('/api/categorias', categoriaRoutes);
+    app.use('/api/clientes', clienteRoutes);
+    app.use('/api/enderecos', enderecoRoutes);
+    app.use('/api/funcionarios', funcionarioRoutes);
+    app.use('/api/pedidos', pedidoRoutes);
+    app.use('/api/produtos', produtoRoutes);
+    app.use('/api/servicos', servicoRoutes);
+    app.use('/api/auth', authRoutes);
+
+    app.use((req, res) => {
+      res.status(404).json({ message: 'Rota não encontrada' });
+    });
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Erro ao configurar o banco de dados:', error);
+    process.exit(1);
+  }
+}
+
+initializeApp();

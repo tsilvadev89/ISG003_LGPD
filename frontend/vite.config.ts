@@ -1,30 +1,18 @@
+// vite.config.js
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    host: true,
-    port: 80,
-  },
   build: {
-    chunkSizeWarningLimit: 2000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separar dependências do React
+          'react-vendor': ['react', 'react-dom'],
+          // Separar MUI em outro chunk
+          'mui-vendor': ['@mui/material', '@mui/icons-material']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000 // Ajuste do limite de aviso de tamanho do chunk
   }
 });
-
-
-/* export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: '54.234.79.240', // ENDEREÇO PUBLICO DA APLICAÇÃO
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
-  },
-  build: {
-    outDir: '/var/www/html', // Define o diretório de saída para a pasta do Apache
-  },
-}); */

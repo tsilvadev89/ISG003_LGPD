@@ -1,20 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ItemForm from './components/ItemForm/ItemForm';
-import Login from './components/Login';
-import Home from './components/home/Home';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { useThemeContext } from "./theme/ThemeContextProvider";
 
-const App: React.FC = () => {
+import { BrowserRouter as Router, Routes } from 'react-router-dom';
+import RoutesConfig from "./Routes/RoutesConfig";
+
+import { TemplateProvider, useTemplate } from "./theme/Template";
+
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+function App() {
+  const { theme } = useThemeContext();
+  const { template } = useTemplate();
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/create" element={<ItemForm />} />
-        <Route path="/edit/:id" element={<ItemForm />} />
-      </Routes>
-    </Router>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <TemplateProvider template={template}>
+            <Routes />
+            <CssBaseline />
+            <RoutesConfig />
+          </TemplateProvider>
+        </ThemeProvider>
+
+      </Router>
+    </LocalizationProvider>
   );
-};
+}
 
 export default App;
