@@ -29,9 +29,10 @@ interface PersonFormUserProps {
   onSave: (cliente: Cliente) => void;
   onDelete: (id: number) => void;
   cliente: Cliente | null;
+  updateOneUser: boolean;
 }
 
-const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, onDelete, cliente }) => {
+const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, onDelete, cliente, updateOneUser }) => {
   const [formData, setFormData] = useState<Partial<Cliente>>({
     primeiro_nome: '',
     sobrenome: '',
@@ -114,7 +115,7 @@ const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, 
               {botaoTexto}
             </Button>
             {cliente && (
-              <Button startIcon={<DeleteIcon />} color="error" onClick={() => setConfirmDeleteOpen(true)}>
+              <Button disabled={updateOneUser} startIcon={<DeleteIcon />} color="error" onClick={() => setConfirmDeleteOpen(true)}>
                 Excluir
               </Button>
             )}

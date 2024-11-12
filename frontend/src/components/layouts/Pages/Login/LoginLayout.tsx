@@ -31,28 +31,42 @@ const LoginLayout: React.FC = () => {
       setOpenSnackbar(true); // Exibe a notificação
     }
   }, [location]);
+  
 
   const handleLogin = async () => {
     try {
       // Validar os dados usando zod
       loginSchema.parse({ email, senha: password });
-
-      // Chama o serviço de login
-      const { token } = await authService.login(email, password);
-
+  
+      // Chama o serviço de login e obtém o token e o usuário
+      // console.log('Tentando fazer login com email:', email, 'e senha:', password); // Log para verificar os dados antes do login
+      const { token, usuario } = await authService.login(email, password);
+      // console.log('Resposta do login:', { token, usuario }); // Log para ver a resposta completa do login
+  
       // Armazena o token no localStorage
       localStorage.setItem('authToken', token);
-      localStorage.setItem('user', JSON.stringify({ email, tipo: 'cliente' }));
-
+      // console.log('Token armazenado:', token); // Log do token
+  
+      // Acessando diretamente o id e tipo do usuário retornado
+      const id = usuario.id;
+      const tipo = usuario.tipo; 
+  
+      // console.log('Usuário após login - ID:', id, 'Tipo:', tipo);
+  
+      // Armazena o usuário no localStorage com o id, email e tipo
+      localStorage.setItem('user', JSON.stringify({ id, email, tipo }));
+      // console.log('Usuário armazenado no localStorage:', { id, email, tipo }); 
+  
       // Redireciona ou exibe mensagem de sucesso
       window.location.href = '/home';
     } catch (error: any) {
+      console.error('Erro no login:', error); 
       if (error instanceof z.ZodError) {
         setError(error.errors[0].message); // Mostra a primeira mensagem de erro do zod
       } else {
-        setError('Email ou senha incorretos'); // Exibe erro genérico
+        setError('Email ou senha incorretos'); 
       }
-      setOpenSnackbar(true); // Abre o snackbar com a mensagem de erro
+      setOpenSnackbar(true); 
     }
   };
 

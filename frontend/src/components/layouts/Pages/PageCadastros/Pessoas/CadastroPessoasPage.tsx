@@ -1,11 +1,12 @@
 import { Stack } from "@mui/material";
 import Divider from '@mui/material/Divider';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MenuMobile from "../../Home/header/MenuMobile";
 import MenuDesktop from "../../Home/header/MenuDesktop";
 import HeaderMobile from "../../Home/header/HeaderMobile";
 import HeaderDesktop from "../../Home/header/HeaderDesktop";
 import UserManagement from "./UserManagement";
+import { funcionarioService } from "../../../../../services/funcionarioService";
 
 interface LayoutProps {
     template: string;
@@ -13,8 +14,21 @@ interface LayoutProps {
 
 const CadastroPessoasPage: React.FC<LayoutProps> = ({ template }) => {
 
+    const [isAdmin, setIsAdmin] = useState(false);
+
     const Header = template === 'mobile' ? HeaderMobile : HeaderDesktop;
     const Menu = template === 'mobile' ? MenuMobile : MenuDesktop;
+
+    useEffect(() => {
+        const checkUserStatus = async () => {
+            const isFuncionarioUser = await funcionarioService.isFuncionario();
+            // console.log('CadastroPessoasPage', isFuncionarioUser)
+            setIsAdmin(isFuncionarioUser);
+        };
+
+        checkUserStatus();
+    }, []);
+
 
     return (
         <Stack
@@ -42,7 +56,7 @@ const CadastroPessoasPage: React.FC<LayoutProps> = ({ template }) => {
             </Stack>
             <Divider flexItem={true} />
             <Stack gap={4}>
-                <UserManagement/>
+                <UserManagement admin={isAdmin} updateOneUser={false} />
             </Stack>
         </Stack>
     );

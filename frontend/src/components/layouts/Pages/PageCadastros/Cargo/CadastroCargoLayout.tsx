@@ -24,7 +24,7 @@ export default function CadastroCargoLayout() {
 
     useEffect(() => {
         setTemplate(currentTemplate);
-        console.log(currentTemplate);
+        // console.log(currentTemplate);
     }, [currentTemplate, setTemplate]);
 
     return (

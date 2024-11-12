@@ -24,7 +24,7 @@ export default function CadastroPessoasLayout() {
 
     useEffect(() => {
         setTemplate(currentTemplate);
-        console.log(currentTemplate);
+        /* console.log(currentTemplate); */
     }, [currentTemplate, setTemplate]);
 
     return (

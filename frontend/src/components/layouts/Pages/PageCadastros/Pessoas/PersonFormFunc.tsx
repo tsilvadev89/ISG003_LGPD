@@ -32,6 +32,7 @@ interface PersonFormFuncProps {
   onDelete: (id: number) => void;
   funcionario: Funcionario | null;
   cargos: Cargo[];
+  updateOneUser: boolean; 
 }
 
 const PersonFormFunc: React.FC<PersonFormFuncProps> = ({
@@ -41,6 +42,7 @@ const PersonFormFunc: React.FC<PersonFormFuncProps> = ({
   onDelete,
   funcionario,
   cargos,
+  updateOneUser,
 }) => {
   const [formData, setFormData] = useState<Partial<Funcionario>>({
     primeiro_nome: '',
@@ -171,7 +173,7 @@ const PersonFormFunc: React.FC<PersonFormFuncProps> = ({
                 {funcionario ? 'Atualizar' : 'Cadastrar'}
               </Button>
               {funcionario && (
-                <Button startIcon={<DeleteIcon />} color="error" onClick={() => setConfirmDeleteOpen(true)}>
+                <Button disabled={updateOneUser} startIcon={<DeleteIcon />} color="error" onClick={() => setConfirmDeleteOpen(true)}>
                   Excluir
                 </Button>
               )}
@@ -197,7 +199,9 @@ const PersonFormFunc: React.FC<PersonFormFuncProps> = ({
       </Dialog>
 
       <Dialog open={confirmUpdateOpen} onClose={() => setConfirmUpdateOpen(false)}>
+        
         <DialogTitle>Confirmar {funcionario ? 'Atualização' : 'Cadastro'}</DialogTitle>
+
         <DialogContent>
           <DialogContentText>
             Tem certeza de que deseja {funcionario ? 'atualizar' : 'cadastrar'} <strong>{formData.primeiro_nome} {formData.sobrenome}</strong>?

@@ -21,8 +21,14 @@ import UserCardListUser from './UserCardListUser';
 import UserCardListFunc from './UserCardListFunc';
 import PersonFormUser from './PersonFormUser';
 import PersonFormFunc from './PersonFormFunc';
+import { authService } from '../../../../../services/authService ';
 
-const UserManagement: React.FC = () => {
+interface UserManagementProps {
+  admin: boolean;
+  updateOneUser: boolean;
+}
+
+const UserManagement: React.FC<UserManagementProps> = ({ admin, updateOneUser }) => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [funcionarios, setFuncionarios] = useState<Funcionario[]>([]);
   const [cargos, setCargos] = useState<Cargo[]>([]);
@@ -33,21 +39,57 @@ const UserManagement: React.FC = () => {
   const [view, setView] = useState<'clientes' | 'funcionarios'>('clientes');
   const isMobile = useMediaQuery('(max-width:600px)');
 
+  // Função para buscar os clientes com base no filtro de admin, id e updateOneUser
   const fetchClientes = async () => {
     try {
+      const userLogged = authService.getUser();
       const response = await clienteService.getAllClientes();
-      setClientes(response);
+
+      let filteredClientes;
+
+      // Caso admin seja true e updateOneUser seja false, retorna todos os clientes
+      if (admin && !updateOneUser) {
+        filteredClientes = response;
+      } else {
+        // Nos outros casos, filtra apenas o usuário logado
+        filteredClientes = userLogged
+          ? response.filter(
+            (cliente) =>
+              cliente.cliente_id === userLogged.id && cliente.email === userLogged.email
+          )
+          : [];
+      }
+
+      setClientes(filteredClientes);
     } catch (error) {
-      console.error('Erro ao buscar clientes:', error);
+      console.error("Erro ao buscar clientes:", error);
     }
   };
 
+  // Função para buscar os funcionários com base no filtro de admin, id e updateOneUser
   const fetchFuncionarios = async () => {
     try {
+      const userLogged = authService.getUser();
       const response = await funcionarioService.getAllFuncionarios();
-      setFuncionarios(response);
+
+      let filteredFuncionarios;
+
+      // Caso admin seja true e updateOneUser seja false, retorna todos os funcionários
+      if (admin && !updateOneUser) {
+        filteredFuncionarios = response;
+      } else {
+        // Nos outros casos, filtra apenas o usuário logado
+        filteredFuncionarios = userLogged
+          ? response.filter(
+            (funcionario) =>
+              funcionario.funcionario_id === userLogged.id && funcionario.email === userLogged.email
+          )
+          : [];
+      }
+
+      setFuncionarios(filteredFuncionarios);
     } catch (error) {
-      console.error('Erro ao buscar funcionários:', error);
+      console.error("Erro ao buscar funcionários:", error);
     }
   };
 
@@ -59,15 +101,15 @@ const UserManagement: React.FC = () => {
       console.error('Erro ao buscar cargos:', error);
     }
   };
-
+  // Chama as funções de fetch dependendo do tipo de usuário/admin
   useEffect(() => {
-    if (view === 'clientes') {
-      fetchClientes();
-    } else {
-      fetchFuncionarios();
-      fetchCargos();
-    }
-  }, [view]);
+    fetchClientes();
+    fetchFuncionarios();
+    fetchCargos();
+  }, [admin, updateOneUser, view]);
+
+
+
 
   const handleCreate = () => {
     setSelectedUser(null);
@@ -121,25 +163,37 @@ const UserManagement: React.FC = () => {
   return (
     <Stack spacing={3} padding={2}>
       <Typography variant="h4">Gerenciamento de {view === 'clientes' ? 'Clientes' : 'Funcionários'}</Typography>
-      
+
       <ToggleButtonGroup
         value={view}
         exclusive
         onChange={(e, newView) => setView(newView)}
         aria-label="View selection"
       >
-        <ToggleButton value="clientes" aria-label="Clientes">
+        <ToggleButton
+          value="clientes"
+          aria-label="Clientes"
+          disabled={!admin}>
+
           Clientes
         </ToggleButton>
-        <ToggleButton value="funcionarios" aria-label="Funcionários">
+
+        <ToggleButton
+          value="funcionarios"
+          aria-label="Funcionários"
+          disabled={!admin}
+        >
           Funcionários
         </ToggleButton>
+
       </ToggleButtonGroup>
 
-      <Button variant="contained" onClick={handleCreate}>
-        Novo {view === 'clientes' ? 'Cliente' : 'Funcionário'}
-      </Button>
-      
+      <Stack display={updateOneUser ? 'none' : 'block'}>
+        <Button variant="contained" onClick={handleCreate} disabled={updateOneUser}>
+          Novo {view === 'clientes' ? 'Cliente' : 'Funcionário'}
+        </Button>
+      </Stack>
+
       {isMobile ? (
         view === 'clientes' ? (
           <UserCardListUser clientes={clientes} onEdit={handleEdit} />
@@ -159,6 +213,7 @@ const UserManagement: React.FC = () => {
           onSave={handleSave}
           onDelete={handleDeleteConfirmed}
           cliente={selectedUser as Cliente | null}
+          updateOneUser={updateOneUser}
         />
       ) : (
         <PersonFormFunc
@@ -168,6 +223,7 @@ const UserManagement: React.FC = () => {
           onDelete={handleDeleteConfirmed}
           funcionario={selectedUser as Funcionario | null}
           cargos={cargos}
+          updateOneUser={updateOneUser}
         />
       )}
 

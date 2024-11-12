@@ -3,9 +3,11 @@ import axios from 'axios';
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}/auth` || 'http://localhost:3000/api/auth';
 
 interface User {
+  funcionario_id: any;
+  cliente_id: any;
+  id: number;
   email: string;
   tipo: string; // pode incluir outros campos do usuário conforme sua necessidade
-  [key: string]: any; // Adicionar campos dinâmicos, se necessário
 }
 
 export const authService = {
@@ -13,7 +15,7 @@ export const authService = {
   async login(email: string, senha: string): Promise<{ token: string; usuario: User }> {
     try {
       const response = await axios.post(`${BASE_URL}/login`, { email, senha });
-
+      
       // Verifique se a resposta contém os dados esperados
       if (!response.data || !response.data.token || !response.data.usuario) {
         throw new Error('Dados inválidos na resposta');
@@ -46,6 +48,9 @@ export const authService = {
 
   // Função para armazenar as informações do usuário no localStorage
   storeUser(userData: User): void {
+
+    /* console.log('AuthService - ', userData); 
+    alert('AuthService - ' + JSON.stringify(userData)) */
     localStorage.setItem('user', JSON.stringify(userData));
   },
 
@@ -57,6 +62,7 @@ export const authService = {
   // Função para obter o usuário armazenado
   getUser(): User | null {
     const user = localStorage.getItem('user');
+    /* alert('Usuário recuperado do localStorage: ' + user); */
     return user ? JSON.parse(user) : null;
   },
 
