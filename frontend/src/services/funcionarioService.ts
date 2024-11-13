@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Funcionario } from '../models/Funcionario';
-import { authService } from './authService ';
+import { authService } from './authService';
 
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}/funcionarios` || 'http://localhost:3000/api/funcionarios';

@@ -24,7 +24,7 @@ export default function ConfiguracaoLayout() {
 
     useEffect(() => {
         setTemplate(currentTemplate);
-        console.log(currentTemplate);
+       /*  console.log(currentTemplate); */
     }, [currentTemplate, setTemplate]);
 
     return (

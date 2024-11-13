@@ -16,6 +16,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Tooltip,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CopyAllIcon from '@mui/icons-material/CopyAll';
@@ -110,15 +111,21 @@ const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, 
           </Stack>
         </CardContent>
         <CardActions>
-          <Stack flexDirection={'column'} gap={2} alignItems={'center'} alignContent={'center'} width={'100%'}>
+          <Stack flexDirection="column" gap={2} alignItems="center" width="100%">
             <Button variant="contained" color="primary" onClick={() => setConfirmUpdateOpen(true)}>
               {botaoTexto}
             </Button>
+
             {cliente && (
-              <Button disabled={updateOneUser} startIcon={<DeleteIcon />} color="error" onClick={() => setConfirmDeleteOpen(true)}>
-                Excluir
-              </Button>
+              <Tooltip title="Para exclusão do usuario, acessar CONFIGURAÇÃO/EXCLUIR CONTA.">
+                <span> {/* Necessário para Tooltip em botões desabilitados */}
+                  <Button disabled startIcon={<DeleteIcon />} color="error" onClick={() => setConfirmDeleteOpen(true)}>
+                    Excluir
+                  </Button>
+                </span>
+              </Tooltip>
             )}
+
             <Button onClick={onClose}>Cancelar</Button>
           </Stack>
         </CardActions>

@@ -40,11 +40,6 @@ const ConfiguracaoManagement: React.FC = () => {
     setSuccess(true);
   };
 
-  const handleRequestData = () => {
-    console.log('Solicitar dados do usuário em CSV');
-    setSuccess(true);
-  };
-
   const handleDeleteUser = () => {
     console.log('Excluir usuário permanentemente');
     setSuccess(true);
@@ -91,7 +86,7 @@ const ConfiguracaoManagement: React.FC = () => {
       {/* Condicional para renderizar conteúdo dependendo da aba ou seleção */}
       {selectedTab === 0 && <EditPreferences onPreferencesUpdate={handleSavePreferences} />}
       {selectedTab === 1 && <UserManagement admin={isAdmin} updateOneUser={true} />}
-      {selectedTab === 2 && <RequestDataUser onRequestData={handleRequestData} />}
+      {selectedTab === 2 && <RequestDataUser />}
       {selectedTab === 3 && <DeleteUserPermanent onDeleteUser={handleDeleteUser} />}
 
       {/* Exibe mensagens de sucesso ou erro */}

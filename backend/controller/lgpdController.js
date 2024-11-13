@@ -1,43 +1,182 @@
-const { Cliente, Funcionario, Pedido, ItemPedido, Endereco, Agendamento, Servico, Produto } = require('../models');
+const { Cliente, Funcionario, Pedido, ItemPedido, Produto, Categoria, Endereco, Agendamento, Servico, Cargo } = require('../models');
 
-// Função para obter todos os dados do usuário para LGPD
 exports.getAllUserData = async (req, res) => {
   try {
-    const userId = req.user.id; // ID do usuário autenticado
+    const userId = req.user.id;
+    const userEmail = req.user.email;
 
-    // Busca dados do cliente e do funcionário, com associações
-    const cliente = await Cliente.findByPk(userId, {
+    let usuarioData = null;
+    let isCliente = false;
+    let isFuncionario = false;
+    let categorias = [];
+    let servicos = [];
+    let pedidos = [];
+    let agendamentos = [];
+    let enderecos = [];
+
+    // Primeiro, tenta encontrar o cliente
+    const cliente = await Cliente.findOne({
+      where: { cliente_id: userId, email: userEmail },
       include: [
-        { model: Endereco },
+        { 
+          model: Endereco, 
+          where: { tipo_entidade: 'cliente' },
+          attributes: [/* 'endereco_id', */ 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep', 'imagem_url']
+        },
         { 
           model: Pedido,
+          attributes: [/* 'pedido_id', */ 'data_pedido', 'valor_total'],
           include: [
-            { model: ItemPedido, include: [Produto] }
+            { 
+              model: ItemPedido,
+              attributes: [/* 'item_id', */ 'quantidade', 'preco_unitario'],
+              include: [
+                { 
+                  model: Produto, 
+                  attributes: [/* 'produto_id', */ 'nome', 'descricao', 'preco', 'estoque', 'imagem_url', 'ativo'],
+                  where: { ativo: true }
+                }
+              ]
+            }
           ]
         },
-        { model: Agendamento, include: [Servico] }
-      ]
+        { 
+          model: Agendamento, 
+          attributes: [/* 'agendamento_id', */ 'data_hora', 'status'],
+          include: [
+            { 
+              model: Servico, 
+              attributes: [/* 'servico_id', */ 'nome', 'descricao', 'preco', 'duracao', 'imagem_url']
+            },
+            { 
+              model: Funcionario, 
+              attributes: ['primeiro_nome']  // Retorna somente o primeiro nome do funcionário
+            }
+          ]
+        }
+      ],
+      attributes: [/* 'cliente_id',  */'primeiro_nome', 'sobrenome', 'email']
     });
 
-    const funcionario = await Funcionario.findByPk(userId, {
-      include: [
-        { model: Endereco },
-        { model: Agendamento, include: [Servico] }
-      ]
-    });
+    // Se o cliente não for encontrado, tenta encontrar o funcionário
+    if (!cliente) {
+      const funcionario = await Funcionario.findOne({
+        where: { funcionario_id: userId, email: userEmail },
+        include: [
+          { 
+            model: Endereco, 
+            where: { tipo_entidade: 'funcionario' },
+            attributes: [/* 'endereco_id', */ 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep', 'imagem_url']
+          },
+          { 
+            model: Agendamento, 
+            attributes: [/* 'agendamento_id', */ 'data_hora', 'status'],
+            include: [
+              { 
+                model: Servico, 
+                attributes: [/* 'servico_id', */ 'nome', 'descricao', 'preco', 'duracao', 'imagem_url'] 
+              },
+              { 
+                model: Cliente, 
+                attributes: ['primeiro_nome']  // Retorna somente o primeiro nome do cliente
+              }
+            ]
+          },
+          { 
+            model: Cargo,
+            attributes: [/* 'cargo_id', */ 'nome', 'descricao'],
+          }
+        ],
+        attributes: [/* 'funcionario_id', */ 'primeiro_nome', 'sobrenome', 'email', 'data_contratacao', 'imagem_url']
+      });
 
-    if (!cliente && !funcionario) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
+      if (funcionario) {
+        usuarioData = funcionario;
+        isFuncionario = true;
+
+        // Se o usuário for funcionário, pegamos as categorias de serviços
+        categorias = await Categoria.findAll({
+          where: { tipo: 'Serviço' },
+          attributes: [/* 'categoria_id', */ 'nome', 'descricao', 'imagem_url', 'tipo']
+        });
+
+        servicos = await Servico.findAll({
+          where: { ativo: true },
+          attributes: [/* 'servico_id', */ 'nome', 'descricao', 'preco', 'duracao', 'imagem_url'],
+          include: [
+            { model: Categoria, attributes: [/* 'categoria_id', */ 'nome'] }
+          ]
+        });
+
+        agendamentos = await Agendamento.findAll({
+          where: { funcionario_id: userId },
+          include: [
+            { 
+              model: Cliente, 
+              attributes: ['primeiro_nome']  // Retorna somente o primeiro nome do cliente
+            },
+            { 
+              model: Servico, 
+              attributes: [/* 'servico_id', */ 'nome', 'descricao']
+            }
+          ]
+        });
+      }
+    } else {
+      usuarioData = cliente;
+      isCliente = true;
+
+      // Se o usuário for cliente, pegamos os pedidos, agendamentos e endereços
+      pedidos = await Pedido.findAll({
+        where: { cliente_id: userId },
+        attributes: [/* 'pedido_id', */ 'data_pedido', 'valor_total'],
+        include: [
+          { 
+            model: ItemPedido,
+            attributes: [/* 'item_id', */ 'quantidade', 'preco_unitario'],
+            include: [
+              { 
+                model: Produto, 
+                attributes: [/* 'produto_id', */ 'nome', 'descricao', 'preco', 'estoque', 'imagem_url', 'ativo'],
+                where: { ativo: true }
+              }
+            ]
+          }
+        ]
+      });
+
+      agendamentos = await Agendamento.findAll({
+        where: { cliente_id: userId },
+        include: [
+          { 
+            model: Funcionario, 
+            attributes: ['primeiro_nome']  // Retorna somente o primeiro nome do funcionário
+          },
+          { 
+            model: Servico, 
+            attributes: [/* 'servico_id', */ 'nome', 'descricao']
+          }
+        ]
+      });
+
+      enderecos = await Endereco.findAll({
+        where: { entidade_id: userId, tipo_entidade: 'cliente' },
+        attributes: [/* 'endereco_id', */ 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep', 'imagem_url']
+      });
     }
 
-    const userData = {
-      cliente: cliente || null,
-      funcionario: funcionario || null
-    };
-
-    res.status(200).json(userData);
+    res.json({
+      usuarioData,
+      /* isCliente,
+      isFuncionario, */
+      categorias,
+      servicos,
+      pedidos,
+      agendamentos,
+      enderecos
+    });
   } catch (error) {
-    console.error('Erro ao obter dados do usuário para LGPD:', error);
-    res.status(500).json({ message: 'Erro ao obter dados do usuário' });
+    console.error("Erro ao obter dados do usuário:", error);
+    res.status(500).send("Erro ao obter dados do usuário.");
   }
 };

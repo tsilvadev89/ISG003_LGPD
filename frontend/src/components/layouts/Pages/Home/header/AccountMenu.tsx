@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { authService } from '../../../../../services/authService ';
+import { authService } from '../../../../../services/authService';
 import { Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; 
 

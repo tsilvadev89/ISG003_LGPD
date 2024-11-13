@@ -21,7 +21,7 @@ import UserCardListUser from './UserCardListUser';
 import UserCardListFunc from './UserCardListFunc';
 import PersonFormUser from './PersonFormUser';
 import PersonFormFunc from './PersonFormFunc';
-import { authService } from '../../../../../services/authService ';
+import { authService } from '../../../../../services/authService';
 
 interface UserManagementProps {
   admin: boolean;
@@ -188,7 +188,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ admin, updateOneUser })
 
       </ToggleButtonGroup>
 
-      <Stack display={updateOneUser ? 'none' : 'block'}>
+      <Stack display={updateOneUser || !admin ? 'none' : 'block'}>
         <Button variant="contained" onClick={handleCreate} disabled={updateOneUser}>
           Novo {view === 'clientes' ? 'Cliente' : 'Funcionário'}
         </Button>

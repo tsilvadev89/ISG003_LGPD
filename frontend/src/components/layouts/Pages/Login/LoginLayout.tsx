@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, Divider, Link, Snackbar, Stack } from '@mui/material';
+import { Box, Typography, Button, Divider, Link, Snackbar, Stack, Alert } from '@mui/material';
 import InputField from './InputField';
 import Checkbox from './Checkbox';
 import GoogleIcon from '@mui/icons-material/Google';
 import FundoImg from '../../../../assets/Login/LoginImage.png';
-import { authService } from '../../../../services/authService ';
+import { authService } from '../../../../services/authService';
 import { z } from 'zod';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const LoginLayout: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState('');
+  const [deleteError, setDeleteError] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openSnackbarDelete, setOpenSnackbarDelete] = useState(false);
 
+
+  const { status } = useParams<{ status?: string }>();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,50 +28,61 @@ const LoginLayout: React.FC = () => {
     senha: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
   });
 
-  // Verifica se há mensagem de erro na URL e a exibe
   useEffect(() => {
+    // Verifica se há uma mensagem de erro ou sucesso via URL
     const state = location.state as { message?: string };
+
+    // Caso haja uma mensagem no state, mostra ela
     if (state && state.message) {
-      setError(state.message);
-      setOpenSnackbar(true); // Exibe a notificação
+      setDeleteError(state.message);
+      setOpenSnackbarDelete(true); // Exibe a notificação
     }
-  }, [location]);
-  
+
+    // Verifica o status na URL (como erro ou sucesso)
+    if (status === 'erro') {
+      setError('Erro ao fazer login. Por favor, verifique suas credenciais.');
+      setOpenSnackbar(true); // Exibe a notificação de erro
+    } else if (status === 'sucesso') {
+      setError('Login realizado com sucesso!');
+      setOpenSnackbar(true); // Exibe a notificação de sucesso
+    }
+  }, [location, status]);
+
 
   const handleLogin = async () => {
     try {
       // Validar os dados usando zod
       loginSchema.parse({ email, senha: password });
-  
+
       // Chama o serviço de login e obtém o token e o usuário
       // console.log('Tentando fazer login com email:', email, 'e senha:', password); // Log para verificar os dados antes do login
       const { token, usuario } = await authService.login(email, password);
       // console.log('Resposta do login:', { token, usuario }); // Log para ver a resposta completa do login
-  
+
       // Armazena o token no localStorage
       localStorage.setItem('authToken', token);
       // console.log('Token armazenado:', token); // Log do token
-  
+
       // Acessando diretamente o id e tipo do usuário retornado
       const id = usuario.id;
-      const tipo = usuario.tipo; 
-  
+      const tipo = usuario.tipo;
+
       // console.log('Usuário após login - ID:', id, 'Tipo:', tipo);
-  
+
       // Armazena o usuário no localStorage com o id, email e tipo
       localStorage.setItem('user', JSON.stringify({ id, email, tipo }));
       // console.log('Usuário armazenado no localStorage:', { id, email, tipo }); 
-  
+
       // Redireciona ou exibe mensagem de sucesso
       window.location.href = '/home';
     } catch (error: any) {
-      console.error('Erro no login:', error); 
+      console.error('Erro no login:', error);
       if (error instanceof z.ZodError) {
         setError(error.errors[0].message); // Mostra a primeira mensagem de erro do zod
       } else {
-        setError('Email ou senha incorretos'); 
+        setError('Email ou senha incorretos');
       }
-      setOpenSnackbar(true); 
+      setOpenSnackbar(true);
     }
   };
 
@@ -77,6 +93,7 @@ const LoginLayout: React.FC = () => {
       height="100vh"
       justifyContent="center"
       alignItems="center"
+      margin={'0, auto'}
       sx={{ backgroundColor: '#f0f0f0' }}
     >
       {/* Contêiner principal com duas colunas */}
@@ -88,8 +105,10 @@ const LoginLayout: React.FC = () => {
         boxShadow={3}
         overflow="hidden"
         sx={{
-          width: { xs: '450px', md: '900px' },
-          height: { xs: '100%', md: '80%' },
+          width: { xs: 'auto', md: '1060px' },
+          minWidth: '350px',
+          height: { xs: '600px', md: '800px' },
+
         }}
       >
         {/* Coluna do formulário */}
@@ -99,7 +118,9 @@ const LoginLayout: React.FC = () => {
           alignItems="center"
           justifyContent="center"
           sx={{
-            width: { xs: '450px', md: '50%' },
+            width: { xs: '100%', md: '50%' },
+            margin: '0, auto',
+            height: 'auto',
             padding: 4,
           }}
         >
@@ -163,9 +184,10 @@ const LoginLayout: React.FC = () => {
         {/* Coluna de imagem */}
         <Box
           sx={{
+            display: { xs: 'none', md: 'flex' },
             backgroundImage: `url(${FundoImg})`,
             backgroundSize: 'cover',
-            width: '50%',
+            width: '70%',
             height: '100%',
           }}
         />
@@ -174,11 +196,16 @@ const LoginLayout: React.FC = () => {
       {/* Snackbar para exibir mensagens de erro */}
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={3000} // Tempo que a mensagem ficará visível
+        autoHideDuration={5000}
         onClose={() => setOpenSnackbar(false)}
         message={error}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} // Localização da mensagem
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} 
       />
+       <Snackbar open={openSnackbarDelete} autoHideDuration={3000} onClose={() => setOpenSnackbarDelete(false)}>
+        <Alert onClose={() => setOpenSnackbarDelete(false)} severity="error">
+          {deleteError}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
