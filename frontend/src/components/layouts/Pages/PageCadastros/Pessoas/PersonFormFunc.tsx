@@ -51,6 +51,7 @@ const PersonFormFunc: React.FC<PersonFormFuncProps> = ({
     cargo_id: 0,
     data_contratacao: '',
     imagem_url: '',
+    senha: '',
   });
   const [copySuccess, setCopySuccess] = useState(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
@@ -67,6 +68,7 @@ const PersonFormFunc: React.FC<PersonFormFuncProps> = ({
         cargo_id: 0,
         data_contratacao: '',
         imagem_url: '',
+        senha: '',
       });
     }
   }, [funcionario]);

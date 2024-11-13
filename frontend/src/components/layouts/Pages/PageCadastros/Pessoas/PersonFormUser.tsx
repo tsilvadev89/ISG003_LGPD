@@ -56,6 +56,7 @@ const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, 
         email: '',
         data_nascimento: '',
         imagem_url: '',
+        senha: '',
       });
     }
   }, [cliente]);
