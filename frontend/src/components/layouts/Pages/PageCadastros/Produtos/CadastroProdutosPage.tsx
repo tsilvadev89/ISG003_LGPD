@@ -5,7 +5,6 @@ import MenuMobile from "../../Home/header/MenuMobile";
 import MenuDesktop from "../../Home/header/MenuDesktop";
 import HeaderMobile from "../../Home/header/HeaderMobile";
 import HeaderDesktop from "../../Home/header/HeaderDesktop";
-import ProdutosPage from "./ProdutosPage";
 import ProdutosManagement from "./ProdutosManagement";
 
 interface LayoutProps {

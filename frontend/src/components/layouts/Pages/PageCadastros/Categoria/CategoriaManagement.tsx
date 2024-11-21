@@ -86,7 +86,7 @@ const CategoriaManagement: React.FC = () => {
       <ToggleButtonGroup
         value={view}
         exclusive
-        onChange={(e, newView) => setView(newView)}
+        onChange={(_e, newView) => setView(newView)}
         aria-label="View selection"
       >
         <ToggleButton value="servico" aria-label="Serviço">

@@ -13,7 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { WhatsApp, Sms, Email, Phone, VolumeUp, Language, TextFields, WbSunny, DarkMode, Save } from '@mui/icons-material';
+import { WhatsApp, Sms, Email, VolumeUp, WbSunny, DarkMode, Save } from '@mui/icons-material';
 
 interface Preferences {
   darkMode: boolean;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, Divider, Link, Snackbar, Stack, Alert } from '@mui/material';
+import { Box, Typography, Button, Divider, Link, Snackbar, Alert } from '@mui/material';
 import InputField from './InputField';
 import Checkbox from './Checkbox';
 import GoogleIcon from '@mui/icons-material/Google';
 import FundoImg from '../../../../assets/Login/LoginImage.png';
 import { authService } from '../../../../services/authService';
 import { z } from 'zod';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const LoginLayout: React.FC = () => {
@@ -21,7 +21,6 @@ const LoginLayout: React.FC = () => {
 
   const { status } = useParams<{ status?: string }>();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const loginSchema = z.object({
     email: z.string().email('Por favor, insira um e-mail válido'),

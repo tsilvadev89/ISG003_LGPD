@@ -167,7 +167,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ admin, updateOneUser })
       <ToggleButtonGroup
         value={view}
         exclusive
-        onChange={(e, newView) => setView(newView)}
+        onChange={(_e, newView) => setView(newView)}
         aria-label="View selection"
       >
         <ToggleButton

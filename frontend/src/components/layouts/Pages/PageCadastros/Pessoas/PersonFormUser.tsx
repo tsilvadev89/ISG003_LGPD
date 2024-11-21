@@ -33,7 +33,7 @@ interface PersonFormUserProps {
   updateOneUser: boolean;
 }
 
-const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, onDelete, cliente, updateOneUser }) => {
+const PersonFormUser: React.FC<PersonFormUserProps> = ({ open, onClose, onSave, onDelete, cliente }) => {
   const [formData, setFormData] = useState<Partial<Cliente>>({
     primeiro_nome: '',
     sobrenome: '',

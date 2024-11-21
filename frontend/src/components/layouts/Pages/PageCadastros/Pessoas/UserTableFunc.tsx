@@ -15,7 +15,6 @@ import {
   IconButton,
   Popover,
   TextField,
-  Button,
   Tooltip,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
