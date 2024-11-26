@@ -47,16 +47,12 @@ CREATE TABLE `agendamentos` (
 LOCK TABLES `agendamentos` WRITE;
 /*!40000 ALTER TABLE `agendamentos` DISABLE KEYS */;
 INSERT INTO `agendamentos` VALUES
-(1,1,2,2,'2024-11-14 15:49:19','confirmado'),
-(2,1,3,3,'2024-11-15 15:49:19','confirmado'),
-(3,2,2,2,'2024-11-14 15:49:19','confirmado'),
-(4,2,3,3,'2024-11-15 15:49:19','confirmado'),
-(5,3,2,2,'2024-11-14 15:49:19','confirmado'),
-(6,3,3,3,'2024-11-15 15:49:19','confirmado'),
-(7,4,2,2,'2024-11-14 15:49:19','confirmado'),
-(8,4,3,3,'2024-11-15 15:49:19','confirmado'),
-(9,5,2,2,'2024-11-14 15:49:19','confirmado'),
-(10,5,3,3,'2024-11-15 15:49:19','confirmado');
+(5,3,2,2,'2024-11-27 12:20:53','confirmado'),
+(6,3,3,3,'2024-11-28 12:20:53','confirmado'),
+(7,4,2,2,'2024-11-27 12:20:53','confirmado'),
+(8,4,3,3,'2024-11-28 12:20:53','confirmado'),
+(9,5,2,2,'2024-11-27 12:20:53','confirmado'),
+(10,5,3,3,'2024-11-28 12:20:53','confirmado');
 /*!40000 ALTER TABLE `agendamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,11 +152,9 @@ CREATE TABLE `clientes` (
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
 INSERT INTO `clientes` VALUES
-(1,'Carla','Silva','carla.silva@example.com','$2b$10$UN1laiYTYUGvBTCrLeZb1ulV3COO5ukm53ppPCUZNgtgUeTmLvAi6','1995-01-10','2024-11-13 15:49:18','https://images.unsplash.com/photo-1685534346360-bb9a018df02a?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(2,'Julia','Santos','julia.santos@example.com','$2b$10$UN1laiYTYUGvBTCrLeZb1ulV3COO5ukm53ppPCUZNgtgUeTmLvAi6','1992-02-15','2024-11-13 15:49:18','https://images.unsplash.com/photo-1516534775068-ba3e7458af70?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(3,'Lucas','Almeida','lucas.almeida@example.com','$2b$10$UN1laiYTYUGvBTCrLeZb1ulV3COO5ukm53ppPCUZNgtgUeTmLvAi6','1990-05-30','2024-11-13 15:49:18','https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=2070&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(4,'Marta','Pereira','marta.pereira@example.com','$2b$10$UN1laiYTYUGvBTCrLeZb1ulV3COO5ukm53ppPCUZNgtgUeTmLvAi6','1988-12-12','2024-11-13 15:49:18','https://plus.unsplash.com/premium_photo-1683143646126-df3a3f3739f3?q=80&w=1974&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(5,'Pedro','Costa','pedro.costa@example.com','$2b$10$UN1laiYTYUGvBTCrLeZb1ulV3COO5ukm53ppPCUZNgtgUeTmLvAi6','1995-08-25','2024-11-13 15:49:18','https://plus.unsplash.com/premium_photo-1689565611422-b2156cc65e47?q=80&w=2070&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+(3,'Lucas','Almeida','lucas.almeida@example.com','$2b$10$j.8y9jG1romXeAk67YrhYez/kqP.LXaXv.a2o0dk2P9k7XXGKfbZe','1990-05-30','2024-11-26 12:20:52','https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=2070&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(4,'Marta','Pereira','marta.pereira@example.com','$2b$10$j.8y9jG1romXeAk67YrhYez/kqP.LXaXv.a2o0dk2P9k7XXGKfbZe','1988-12-12','2024-11-26 12:20:52','https://plus.unsplash.com/premium_photo-1683143646126-df3a3f3739f3?q=80&w=1974&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(5,'Pedro','Costa','pedro.costa@example.com','$2b$10$j.8y9jG1romXeAk67YrhYez/kqP.LXaXv.a2o0dk2P9k7XXGKfbZe','1995-08-25','2024-11-26 12:20:52','https://plus.unsplash.com/premium_photo-1689565611422-b2156cc65e47?q=80&w=2070&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,11 +226,11 @@ CREATE TABLE `funcionarios` (
 LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
 INSERT INTO `funcionarios` VALUES
-(1,'Ana','Silva','ana.silva@example.com','$2b$10$N0uxek/mFO/r/QpK2ZC/ReSkUoEH22HY0e8arfQHB9gDgtwvSANVC',1,'2021-01-15 00:00:00','https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(2,'Beatriz','Oliveira','beatriz.oliveira@example.com','$2b$10$N0uxek/mFO/r/QpK2ZC/ReSkUoEH22HY0e8arfQHB9gDgtwvSANVC',2,'2020-08-20 00:00:00','https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(3,'Clara','Martins','clara.martins@example.com','$2b$10$N0uxek/mFO/r/QpK2ZC/ReSkUoEH22HY0e8arfQHB9gDgtwvSANVC',3,'2019-07-12 00:00:00','https://images.unsplash.com/photo-1573497161161-c3e73707e25c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(4,'Diana','Souza','diana.souza@example.com','$2b$10$N0uxek/mFO/r/QpK2ZC/ReSkUoEH22HY0e8arfQHB9gDgtwvSANVC',4,'2021-03-10 00:00:00','https://images.unsplash.com/photo-1573497490790-9053816a01d4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(5,'Elisa','Costa','elisa.costa@example.com','$2b$10$N0uxek/mFO/r/QpK2ZC/ReSkUoEH22HY0e8arfQHB9gDgtwvSANVC',5,'2022-05-05 00:00:00','https://images.unsplash.com/photo-1674049405530-7bbb0b0c1eef?q=80&w=2070&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+(1,'Ana','Silva','ana.silva@example.com','$2b$10$bRJYDt1EdTZ8apXncVurGeLB5NP422hvkjY5JPrPt1CAREYh2m.aO',1,'2021-01-15 00:00:00','https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(2,'Beatriz','Oliveira','beatriz.oliveira@example.com','$2b$10$bRJYDt1EdTZ8apXncVurGeLB5NP422hvkjY5JPrPt1CAREYh2m.aO',2,'2020-08-20 00:00:00','https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(3,'Clara','Martins','clara.martins@example.com','$2b$10$bRJYDt1EdTZ8apXncVurGeLB5NP422hvkjY5JPrPt1CAREYh2m.aO',3,'2019-07-12 00:00:00','https://images.unsplash.com/photo-1573497161161-c3e73707e25c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(4,'Diana','Souza','diana.souza@example.com','$2b$10$bRJYDt1EdTZ8apXncVurGeLB5NP422hvkjY5JPrPt1CAREYh2m.aO',4,'2021-03-10 00:00:00','https://images.unsplash.com/photo-1573497490790-9053816a01d4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(5,'Elisa','Costa','elisa.costa@example.com','$2b$10$bRJYDt1EdTZ8apXncVurGeLB5NP422hvkjY5JPrPt1CAREYh2m.aO',5,'2022-05-05 00:00:00','https://images.unsplash.com/photo-1674049405530-7bbb0b0c1eef?q=80&w=2070&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,56 +262,6 @@ CREATE TABLE `itens_pedido` (
 LOCK TABLES `itens_pedido` WRITE;
 /*!40000 ALTER TABLE `itens_pedido` DISABLE KEYS */;
 INSERT INTO `itens_pedido` VALUES
-(1,1,1,1,20.00),
-(2,1,2,1,20.00),
-(3,1,3,1,20.00),
-(4,1,4,1,20.00),
-(5,1,5,1,20.00),
-(6,2,1,1,20.00),
-(7,2,2,1,20.00),
-(8,2,3,1,20.00),
-(9,2,4,1,20.00),
-(10,2,5,1,20.00),
-(11,3,1,1,20.00),
-(12,3,2,1,20.00),
-(13,3,3,1,20.00),
-(14,3,4,1,20.00),
-(15,3,5,1,20.00),
-(16,4,1,1,20.00),
-(17,4,2,1,20.00),
-(18,4,3,1,20.00),
-(19,4,4,1,20.00),
-(20,4,5,1,20.00),
-(21,5,1,1,20.00),
-(22,5,2,1,20.00),
-(23,5,3,1,20.00),
-(24,5,4,1,20.00),
-(25,5,5,1,20.00),
-(26,6,1,1,20.00),
-(27,6,2,1,20.00),
-(28,6,3,1,20.00),
-(29,6,4,1,20.00),
-(30,6,5,1,20.00),
-(31,7,1,1,20.00),
-(32,7,2,1,20.00),
-(33,7,3,1,20.00),
-(34,7,4,1,20.00),
-(35,7,5,1,20.00),
-(36,8,1,1,20.00),
-(37,8,2,1,20.00),
-(38,8,3,1,20.00),
-(39,8,4,1,20.00),
-(40,8,5,1,20.00),
-(41,9,1,1,20.00),
-(42,9,2,1,20.00),
-(43,9,3,1,20.00),
-(44,9,4,1,20.00),
-(45,9,5,1,20.00),
-(46,10,1,1,20.00),
-(47,10,2,1,20.00),
-(48,10,3,1,20.00),
-(49,10,4,1,20.00),
-(50,10,5,1,20.00),
 (51,11,1,1,20.00),
 (52,11,2,1,20.00),
 (53,11,3,1,20.00),
@@ -421,31 +365,21 @@ CREATE TABLE `pedidos` (
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
 INSERT INTO `pedidos` VALUES
-(1,1,'2024-11-13 15:49:19',100.00),
-(2,1,'2024-11-13 15:49:19',100.00),
-(3,1,'2024-11-13 15:49:19',100.00),
-(4,1,'2024-11-13 15:49:19',100.00),
-(5,1,'2024-11-13 15:49:19',100.00),
-(6,2,'2024-11-13 15:49:19',100.00),
-(7,2,'2024-11-13 15:49:19',100.00),
-(8,2,'2024-11-13 15:49:19',100.00),
-(9,2,'2024-11-13 15:49:19',100.00),
-(10,2,'2024-11-13 15:49:19',100.00),
-(11,3,'2024-11-13 15:49:19',100.00),
-(12,3,'2024-11-13 15:49:19',100.00),
-(13,3,'2024-11-13 15:49:19',100.00),
-(14,3,'2024-11-13 15:49:19',100.00),
-(15,3,'2024-11-13 15:49:19',100.00),
-(16,4,'2024-11-13 15:49:19',100.00),
-(17,4,'2024-11-13 15:49:19',100.00),
-(18,4,'2024-11-13 15:49:19',100.00),
-(19,4,'2024-11-13 15:49:19',100.00),
-(20,4,'2024-11-13 15:49:19',100.00),
-(21,5,'2024-11-13 15:49:19',100.00),
-(22,5,'2024-11-13 15:49:19',100.00),
-(23,5,'2024-11-13 15:49:19',100.00),
-(24,5,'2024-11-13 15:49:19',100.00),
-(25,5,'2024-11-13 15:49:19',100.00);
+(11,3,'2024-11-26 12:20:52',100.00),
+(12,3,'2024-11-26 12:20:52',100.00),
+(13,3,'2024-11-26 12:20:52',100.00),
+(14,3,'2024-11-26 12:20:52',100.00),
+(15,3,'2024-11-26 12:20:52',100.00),
+(16,4,'2024-11-26 12:20:52',100.00),
+(17,4,'2024-11-26 12:20:52',100.00),
+(18,4,'2024-11-26 12:20:52',100.00),
+(19,4,'2024-11-26 12:20:52',100.00),
+(20,4,'2024-11-26 12:20:53',100.00),
+(21,5,'2024-11-26 12:20:53',100.00),
+(22,5,'2024-11-26 12:20:53',100.00),
+(23,5,'2024-11-26 12:20:53',100.00),
+(24,5,'2024-11-26 12:20:53',100.00),
+(25,5,'2024-11-26 12:20:53',100.00);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -552,4 +486,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2024-11-13 12:49:25
+-- Dump completed on 2024-11-26  9:23:33

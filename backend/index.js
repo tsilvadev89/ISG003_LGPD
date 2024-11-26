@@ -24,8 +24,14 @@ app.use(cors({
 
 async function initializeApp() {
   try {
-    await populateData(); // Criação e população do banco de dados
-    console.log('Banco de dados configurado e populado.');
+    // Verifica se o restore do banco de dados está habilitado
+    console.log('process.env.DB_RESTORE - ',process.env.DB_RESTORE)
+    if (process.env.DB_RESTORE === 'true') {
+      await populateData(); // Criação e população do banco de dados
+      console.log('Banco de dados configurado e populado.');
+    } else {
+      console.log('DB_RESTORE está desativado. Pulando etapa de configuração do banco de dados.');
+    }
 
     // Configuração de rotas
     app.use('/api/agendamentos', agendamentoRoutes);
@@ -39,7 +45,6 @@ async function initializeApp() {
     app.use('/api/servicos', servicoRoutes);
     app.use('/api/auth', authRoutes);
     app.use('/api/lgpd', lgpdRoutes);
-    
 
     app.use((req, res) => {
       res.status(404).json({ message: 'Rota não encontrada' });
