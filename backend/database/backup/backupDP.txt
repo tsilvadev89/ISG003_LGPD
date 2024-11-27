@@ -1,0 +1,27 @@
+Pasta client
+C:\Program Files\MariaDB 11.6\bin
+
+
+Repositorio backup database
+C:\tcs\CODE\ISG003_LGPD\backend\database\backup
+
+APRESENTAÇÃO LGPT 
+ARTIGO 18 - ITEM 6 GARANTIA EXCLUSÃO TOTAL DE DADOS
+
+ARTIGO 48 - COMUNICAÇÃO VAZAMENTO DE DADOS
+
+Backup
+
+mariadb-dump -u root -p --host=localhost --port=3306 salao_beleza > "C:\tcs\CODE\ISG003_LGPD\backend\database\backup\salao_beleza_backup.sql"
+
+
+Restore
+mariadb-dump -u root -p --host=localhost --port=3306 salao_beleza < "C:\tcs\CODE\ISG003_LGPD\backend\database\backup\salao_beleza_backup.sql"
+
+
+
+MYSQL
+mysqldump -u root -p --host=localhost --port=3306 salao_beleza > "C:\Users\thiag\Documents\CODE\5S\ISG003_LGPD\backend\database\backup\salao_beleza_backup.sql"
+
+
+mysqldump -u root -p --host=localhost --port=3306 salao_beleza > "C:\Users\thiag\Documents\CODE\5S\ISG003_LGPD\backend\database\backup\salao_beleza_backup.sql"
